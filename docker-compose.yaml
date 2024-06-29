@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  bot:
+    container_name: bot
+    build: ./
+    restart: on-failure
+    command:
+      - python src/presentation/bot.py
+    env_file:
+      - .env
