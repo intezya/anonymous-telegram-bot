@@ -9,3 +9,4 @@ services:
       - python src/presentation/bot.py
     env_file:
       - .env
+      -
