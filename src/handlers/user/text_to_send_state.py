@@ -1,10 +1,9 @@
 from aiogram import Bot
-from aiogram.exceptions import TelegramBadRequest
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from keyboards.inline import answer_back as answer_back_kb
-from other.constants import MSG_SENT_TEXT, USER_NOT_FOUND_TEXT
+from other.constants import MSG_SENT_TEXT
 
 
 async def get_text_to_send(msg: Message, state: FSMContext, bot: Bot):
@@ -12,13 +11,13 @@ async def get_text_to_send(msg: Message, state: FSMContext, bot: Bot):
     receiver_id = state_data.get('receiver_id')
     hashed_sender_id = state_data.get('hashed_sender_id')
 
-    try:
+    if msg.text:
+        text_for_msg = 'Получено новое сообщение!\n\n' + msg.text
         await bot.send_message(
             chat_id=receiver_id,
-            text='Получено новое сообщение!',
+            text=text_for_msg,
+            reply_markup=answer_back_kb(hashed_sender_id),
         )
-    except TelegramBadRequest:
-        text = USER_NOT_FOUND_TEXT
     else:
         await bot.copy_message(
             from_chat_id=msg.chat.id,
@@ -26,12 +25,11 @@ async def get_text_to_send(msg: Message, state: FSMContext, bot: Bot):
             chat_id=receiver_id,
             reply_markup=answer_back_kb(hashed_sender_id),
         )
-        text = MSG_SENT_TEXT
 
     await bot.delete_message(
         chat_id=state_data.get('msg_chat_id_to_delete'),
         message_id=state_data.get('msg_id_to_delete'),
     )
 
-    await msg.answer(text=text)
+    await msg.answer(text=MSG_SENT_TEXT)
     await state.clear()

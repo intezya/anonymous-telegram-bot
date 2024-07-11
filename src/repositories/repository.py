@@ -29,7 +29,6 @@ class SQLAlchemyRepository(AbstractRepository):
     async def find_one(self, **filter_by) -> UserSchema:
         if 'user_id' in filter_by.keys():
             filter_by['tg_id'] = int(filter_by.pop('user_id'))
-        print(filter_by)
         statement = select(self.model).filter_by(**filter_by)
         query_result = await self.session.execute(statement)
         return query_result.scalar_one().to_read_model()

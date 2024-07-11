@@ -18,22 +18,26 @@ async def start_with_params(msg: Message, command: CommandObject, state: FSMCont
     try:
         receiver_user = await UsersService().get_user(uow, receiver_hashed_id)
     except NoResultFound:
-        text = 'Такого пользователя не существует! ❌'
+        await msg.answer('Такого пользователя не существует! ❌')
+        return
+
+    receiver_id = receiver_user.tg_id
+
+    if receiver_id == msg.from_user.id:
+        text = 'Нельзя отправить сообщение самому себе! ❌'
     else:
-        receiver_id = receiver_user.tg_id
+        text = SUCCESSFUL_LINK_TEXT
+        kb = cancel_kb()
+        await state.set_state(UserStates.get_text_to_send)
 
-        if receiver_id == msg.from_user.id:
-            text = 'Нельзя отправить сообщение самому себе! ❌'
-        else:
-            text = SUCCESSFUL_LINK_TEXT
-            kb = cancel_kb()
-            await state.set_state(UserStates.get_text_to_send)
-            await state.update_data(
-                receiver_id=receiver_id,
-                hashed_sender_id=get_hash(msg.from_user.id),
-            )
-
-    await msg.answer(
+    sent_message = await msg.answer(
         text=text,
         reply_markup=kb,
+    )
+
+    await state.update_data(
+        receiver_id=receiver_id,
+        hashed_sender_id=get_hash(msg.from_user.id),
+        msg_id_to_delete=sent_message.message_id,
+        msg_chat_id_to_delete=sent_message.chat.id,
     )
