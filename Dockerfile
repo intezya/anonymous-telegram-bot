@@ -24,4 +24,4 @@ COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
 COPY src ./src
 
-ENTRYPOINT ["python", "-m", "src.presentation.bot"]
+ENTRYPOINT ["python", "-m", "src.presentation.src"]

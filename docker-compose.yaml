@@ -1,12 +1,21 @@
 version: '3.8'
 
 services:
-  bot:
-    container_name: bot
-    build: ./
-    restart: on-failure
-    command:
-      - python src/presentation/bot.py
-    env_file:
-      - .env
-      -
+  #  src:
+  #    container_name: src
+  #    build: ./
+  #    restart: on-failure
+  #    command:
+  #      - python src/presentation/src.py
+  #    env_file:
+  #      - .env
+  #      -
+  db:
+    container_name: db
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
