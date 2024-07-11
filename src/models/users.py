@@ -29,7 +29,7 @@ class Users(Base):
         index=True,
     )
 
-    def to_read_module(self) -> UserSchema:
+    def to_read_model(self) -> UserSchema:
         return UserSchema(
             tg_id=self.tg_id,
             hashed_tg_id=self.hashed_tg_id,

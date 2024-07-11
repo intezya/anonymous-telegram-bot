@@ -1,14 +1,21 @@
 from aiogram import Bot
 from aiogram.types import Message
+from sqlalchemy.exc import IntegrityError
 
 from keyboards.inline import share_tg_link
 from other.constants import START_TEXT
+from other.get_hash import get_hash
 from repositories.unitofwork import IUnitOfWork
 from services.users import UsersService
 
 
 async def start(msg: Message, bot: Bot, uow: IUnitOfWork):
-    hashed_tg_id = await UsersService().add_user(uow, msg.from_user.id)
+    try:
+        await UsersService().add_user(uow, msg.from_user.id)
+    except IntegrityError:
+        pass
+    
+    hashed_tg_id = get_hash(msg.from_user.id)
 
     bot_info = await bot.me()
     link = 'https://t.me/{bot_username}?start={hashed_tg_id}'.format(

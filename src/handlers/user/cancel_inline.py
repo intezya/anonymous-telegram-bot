@@ -8,7 +8,7 @@ from other.get_hash import get_hash
 
 
 async def cancel(callback: CallbackQuery, state: FSMContext, bot: Bot):
-    hashed_tg_id = await get_hash(callback.from_user.id)
+    hashed_tg_id = get_hash(callback.from_user.id)
 
     bot_info = await bot.me()
     link = 'https://t.me/{bot_username}?start={hashed_tg_id}'.format(

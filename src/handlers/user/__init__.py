@@ -14,10 +14,10 @@ def prepare_router() -> Router:
     router = Router()
     router.message.filter(ChatTypeFilter('private'))
 
+    router.message.register(get_text_to_send, F.text, UserStates.get_text_to_send)
     router.message.register(start, F.text == '/start')
     router.message.register(start_with_params, CommandStart())
     router.callback_query.register(cancel, F.data == 'cancel')
-    router.message.register(get_text_to_send, F.text, UserStates.get_text_to_send)
-    router.callback_query.register(answer_back, F.data.startswith('answer-back-'))
+    router.callback_query.register(answer_back, F.data.startswith('answer_back_'))
 
     return router

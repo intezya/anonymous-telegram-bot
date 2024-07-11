@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
-from select import select
 
-from sqlalchemy import insert
+from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from schemas.user import UserSchema
 
 
 class AbstractRepository(ABC):
@@ -11,7 +12,7 @@ class AbstractRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def find_one(self):
+    async def find_one(self, **filter_by):
         raise NotImplementedError
 
 
@@ -25,7 +26,10 @@ class SQLAlchemyRepository(AbstractRepository):
         statement = insert(self.model).values(tg_id=tg_id, hashed_tg_id=hashed_tg_id)
         await self.session.execute(statement)
 
-    async def find_one(self, **filter_by):
+    async def find_one(self, **filter_by) -> UserSchema:
+        if 'user_id' in filter_by.keys():
+            filter_by['tg_id'] = int(filter_by.pop('user_id'))
+        print(filter_by)
         statement = select(self.model).filter_by(**filter_by)
         query_result = await self.session.execute(statement)
         return query_result.scalar_one().to_read_model()
