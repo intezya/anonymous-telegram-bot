@@ -5,7 +5,7 @@ from sqlalchemy import MetaData
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase, declared_attr
 
-from data.config import settings
+from config import settings
 from other.case_converter import camel_case_to_snake_case
 
 

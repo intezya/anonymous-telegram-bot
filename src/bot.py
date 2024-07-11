@@ -4,7 +4,7 @@ from aiogram import Dispatcher, Bot
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
-from data.config import settings
+from config import settings
 from handlers import user
 from repositories.unitofwork import UnitOfWork
 
@@ -15,7 +15,7 @@ def setup_handlers(dp: Dispatcher) -> None:
     )
 
 
-def setup_middlewares(dp: Dispatcher) -> None:
+def setup_middlewares(dp: Dispatcher) -> None:  # TODO: remove this if unused in future
     pass
 
 
@@ -41,8 +41,7 @@ def main():
         ),
     )
     dp = Dispatcher(
-        uow=UnitOfWork()
-        # storage=...,
+        uow=UnitOfWork(),
     )
 
     dp.startup.register(on_startup_polling)
