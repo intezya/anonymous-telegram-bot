@@ -16,6 +16,7 @@ alembic = "^1.13.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
+wemake-python-styleguide = "^0.19.2"
 
 [build-system]
 requires = ["poetry-core"]
