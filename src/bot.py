@@ -6,6 +6,7 @@ from aiogram.enums import ParseMode
 
 from data.config import settings
 from handlers import user
+from repositories.unitofwork import UnitOfWork
 
 
 def setup_handlers(dp: Dispatcher) -> None:
@@ -40,6 +41,7 @@ def main():
         ),
     )
     dp = Dispatcher(
+        uow=UnitOfWork()
         # storage=...,
     )
 
