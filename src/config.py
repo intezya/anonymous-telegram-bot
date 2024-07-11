@@ -24,7 +24,7 @@ class DBConfig:
     db_name: str
 
     @property
-    def DATABASE_URL(self) -> PostgresDsn:
+    def database_url(self) -> PostgresDsn:
         return 'postgresql+asyncpg://{user}:{passw}@{host}:{port}/{name}'.format(
             user=self.db_user,
             passw=self.db_pass,
@@ -34,13 +34,14 @@ class DBConfig:
         )
 
     @property
-    def naming_convention(self): return {
-        'ix': 'ix_%(column_0_label)s',
-        'uq': 'uq_%(table_name)s_%(column_0_N_name)s',
-        'ck': 'ck_%(table_name)s_%(constraint_name)s',
-        'fk': 'fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s',
-        'pk': 'pk_%(table_name)s',
-    }
+    def naming_convention(self):
+        return {
+            'ix': 'ix_%(column_0_label)s',
+            'uq': 'uq_%(table_name)s_%(column_0_N_name)s',
+            'ck': 'ck_%(table_name)s_%(constraint_name)s',
+            'fk': 'fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s',
+            'pk': 'pk_%(table_name)s',
+        }
 
 
 @dataclass
@@ -59,5 +60,5 @@ settings = Settings(
         db_host=os.environ['DB_HOST'],
         db_port=int(os.environ['DB_PORT']),
         db_name=os.environ['DB_NAME'],
-    )
+    ),
 )

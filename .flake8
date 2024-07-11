@@ -2,8 +2,14 @@
 max-line-length = 100
 exclude = src/migrations,src/other/case_converter.py
 
-ignore = D100, D101, D102, D103, D104, D105, D107, WPS410, WPS412, I001, I002, I003, I004, I005
+ignore = D100, D101, D102, D103, D104, D105, D107, WPS410, WPS412, I001, I002, I003, I004, I005, Q001
 
 per-file-ignores =
     # Needed for naming convention
     src/config.py: WPS323
+
+    # That's not a getter
+    src/handlers/user/text_to_send_state.py: WPS463
+
+    # There is just magic filter "F"
+    src/handlers/user/__init__.py: WPS347

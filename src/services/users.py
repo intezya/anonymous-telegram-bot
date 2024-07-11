@@ -12,5 +12,4 @@ class UsersService:
 
     async def get_user(self, uow: IUnitOfWork):
         async with uow:
-            users = await uow.users.find_one()
-            return users
+            return await uow.users.find_one()

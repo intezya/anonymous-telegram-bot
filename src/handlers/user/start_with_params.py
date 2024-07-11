@@ -3,6 +3,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from keyboards.inline import cancel as cancel_kb
+from other.constants import SUCCESSFUL_LINK_TEXT
 from states import UserStates
 
 
@@ -16,17 +17,18 @@ async def start_with_params(msg: Message, command: CommandObject, state: FSMCont
     #  TODO: do try/except
     match x:
         case ValueError():
-            text = "❌ Некорректная ссылка! ❌"
+            text = '❌ Некорректная ссылка! ❌'
         case False:
-            text = "❌ Вы не можете написать сами себе! ❌"
+            text = '❌ Вы не можете написать сами себе! ❌'
         case KeyError():
-            text = "❌ Такого пользователя не существует! ❌"
+            text = '❌ Такого пользователя не существует! ❌'
         case _:
-            text = "Сейчас ты можешь отправить анонимное сообщение тому человеку, " \
-                   "который опубликовал эту ссылку."
+            text = SUCCESSFUL_LINK_TEXT
             kb = cancel_kb()
             await state.set_state(UserStates.get_text_to_send)
             await state.update_data(receiver_id=x)
 
-    await msg.answer(text=text,
-                     reply_markup=kb)
+    await msg.answer(
+        text=text,
+        reply_markup=kb,
+    )

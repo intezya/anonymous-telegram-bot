@@ -7,9 +7,11 @@ from states import UserStates
 
 
 async def answer_back(callback: CallbackQuery, state: FSMContext):
-    sender_id = callback.data.split("-")[2]
+    sender_id = callback.data.split('-')[2]
 
-    await callback.message.answer(text=ANSWER_BACK_TEXT,
-                                  reply_markup=cancel_kb())
+    await callback.message.answer(
+        text=ANSWER_BACK_TEXT,
+        reply_markup=cancel_kb(),
+    )
     await state.set_state(UserStates.get_text_to_send)
     await state.update_data(receiver_id=sender_id)
