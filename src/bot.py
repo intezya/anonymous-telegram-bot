@@ -1,6 +1,7 @@
 import asyncio
 
-from aiogram import Dispatcher, Bot
+from aiogram import Bot
+from aiogram import Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
@@ -47,3 +48,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+    # TODO: add sender_id, receiver_id and other data that stored in
+    #  state.data to Message attributes

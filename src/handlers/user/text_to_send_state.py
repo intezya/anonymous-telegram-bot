@@ -3,7 +3,9 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from keyboards.inline import answer_back as answer_back_kb
+from keyboards.inline import send_more
 from other.constants import MSG_SENT_TEXT
+from other.get_hash import get_hash
 
 
 async def get_text_to_send(
@@ -30,7 +32,11 @@ async def get_text_to_send(
             reply_markup=answer_back_kb(hashed_sender_id),
         )
 
-    await msg.answer(text=MSG_SENT_TEXT)
+    await msg.answer(
+        text=MSG_SENT_TEXT,
+        reply_markup=send_more(get_hash(receiver_id)),
+    )
+
     await bot.delete_message(
         chat_id=state_data.get('msg_chat_id_to_delete'),
         message_id=state_data.get('msg_id_to_delete'),
