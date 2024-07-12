@@ -1,8 +1,10 @@
 import uuid
 
-from sqlalchemy import BigInteger, String
+from sqlalchemy import BigInteger
+from sqlalchemy import String
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column
 
 from db.base import Base
 from schemas.user import UserSchema
@@ -22,7 +24,7 @@ class Users(Base):
         nullable=False,
         index=True,
     )
-    hashed_tg_id: Mapped[int] = mapped_column(
+    hashed_tg_id: Mapped[str] = mapped_column(
         String,
         unique=True,
         nullable=False,
