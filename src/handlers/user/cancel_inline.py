@@ -12,12 +12,12 @@ async def cancel(
     state: FSMContext,
     bot: Bot,
 ) -> None:
-    hashed_tg_id = get_hash(callback.from_user.id)
+    hashed_id = get_hash(callback.from_user.id)
 
     bot_info = await bot.me()
-    link = 'https://t.me/{bot_username}?start={hashed_tg_id}'.format(
+    link = 'https://t.me/{bot_username}?start={hashed_id}'.format(
         bot_username=bot_info.username,
-        hashed_tg_id=hashed_tg_id,
+        hashed_id=hashed_id,
     )
 
     await callback.message.edit_text(

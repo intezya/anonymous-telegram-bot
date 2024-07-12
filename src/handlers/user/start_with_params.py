@@ -16,15 +16,20 @@ async def start_with_params(
     state: FSMContext,
     uow: IUnitOfWork,
 ) -> None:
+    user_from_db = await UsersService().get_user(uow, user_id=msg.from_user.id)
+
+    if user_from_db is None:
+        await UsersService().add_user(uow, msg.from_user.id)
+
     receiver_hashed_id = command.args
 
-    receiver_user = await UsersService().get_user(uow, hashed_tg_id=receiver_hashed_id)
+    receiver_user = await UsersService().get_user(uow, hashed_id=receiver_hashed_id)
 
     if receiver_user is None:
         await msg.answer('Такого пользователя не существует! ❌')
         return
 
-    receiver_id = receiver_user.tg_id
+    receiver_id = receiver_user.id
 
     if receiver_id == msg.from_user.id:
         await msg.answer('Нельзя отправить сообщение самому себе! ❌')

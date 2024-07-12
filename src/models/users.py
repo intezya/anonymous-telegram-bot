@@ -1,8 +1,5 @@
-import uuid
-
 from sqlalchemy import BigInteger
 from sqlalchemy import String
-from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 
@@ -11,20 +8,14 @@ from schemas.user import UserSchema
 
 
 class Users(Base):
-    id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
-        unique=True,
-        nullable=False,
-        default=uuid.uuid4,
-    )
-    tg_id: Mapped[int] = mapped_column(
+    id: Mapped[int] = mapped_column(
         BigInteger,
         unique=True,
         primary_key=True,
         nullable=False,
         index=True,
     )
-    hashed_tg_id: Mapped[str] = mapped_column(
+    hashed_id: Mapped[str] = mapped_column(
         String,
         unique=True,
         nullable=False,
@@ -33,6 +24,6 @@ class Users(Base):
 
     def to_read_model(self) -> UserSchema:
         return UserSchema(
-            tg_id=self.tg_id,
-            hashed_tg_id=self.hashed_tg_id,
+            id=self.id,
+            hashed_id=self.hashed_id,
         )

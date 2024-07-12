@@ -6,8 +6,8 @@ from schemas.user import UserSchema
 class UsersService:
     async def add_user(self, uow: IUnitOfWork, tg_id: int) -> None:
         async with uow:
-            hashed_tg_id = get_hash(tg_id)
-            await uow.users.add_one(tg_id, hashed_tg_id)
+            hashed_id = get_hash(tg_id)
+            await uow.users.add_one(tg_id, hashed_id)
             await uow.commit()
 
     async def get_user(self, uow: IUnitOfWork, **kwargs) -> UserSchema | None:
