@@ -27,7 +27,8 @@ async def start_with_params(
     receiver_id = receiver_user.tg_id
 
     if receiver_id == msg.from_user.id:
-        text = 'Нельзя отправить сообщение самому себе! ❌'
+        await msg.answer('Нельзя отправить сообщение самому себе! ❌')
+        return
     else:
         text = SUCCESSFUL_LINK_TEXT
         await state.set_state(UserStates.get_text_to_send)

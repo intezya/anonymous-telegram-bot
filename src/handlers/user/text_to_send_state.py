@@ -30,10 +30,10 @@ async def get_text_to_send(
             reply_markup=answer_back_kb(hashed_sender_id),
         )
 
+    await msg.answer(text=MSG_SENT_TEXT)
     await bot.delete_message(
         chat_id=state_data.get('msg_chat_id_to_delete'),
         message_id=state_data.get('msg_id_to_delete'),
     )
 
-    await msg.answer(text=MSG_SENT_TEXT)
     await state.clear()
