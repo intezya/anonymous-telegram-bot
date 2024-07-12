@@ -1,6 +1,5 @@
 from aiogram import Bot
 from aiogram.types import Message
-from sqlalchemy.exc import IntegrityError
 
 from keyboards.inline import share_tg_link
 from other.constants import START_TEXT
@@ -9,12 +8,16 @@ from repositories.unitofwork import IUnitOfWork
 from services.users import UsersService
 
 
-async def start(msg: Message, bot: Bot, uow: IUnitOfWork):
-    try:
+async def start(
+    msg: Message,
+    bot: Bot,
+    uow: IUnitOfWork,
+) -> None:
+    user_from_db = await UsersService().get_user(uow, user_id=msg.from_user.id)
+
+    if user_from_db is None:
         await UsersService().add_user(uow, msg.from_user.id)
-    except IntegrityError:
-        pass
-    
+
     hashed_tg_id = get_hash(msg.from_user.id)
 
     bot_info = await bot.me()

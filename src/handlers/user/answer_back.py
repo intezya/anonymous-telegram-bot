@@ -9,9 +9,13 @@ from services.users import UsersService
 from states import UserStates
 
 
-async def answer_back(callback: CallbackQuery, state: FSMContext, uow: UnitOfWork):
+async def answer_back(
+    callback: CallbackQuery,
+    state: FSMContext,
+    uow: UnitOfWork,
+) -> None:
     sender_hashed_id = callback.data.split('_')[2]
-    receiver_user = await UsersService().get_user(uow, sender_hashed_id)
+    receiver_user = await UsersService().get_user(uow, hashed_tg_id=sender_hashed_id)
     sent_message = await callback.message.answer(
         text=ANSWER_BACK_TEXT,
         reply_markup=cancel_kb(),

@@ -15,13 +15,8 @@ def setup_handlers(dp: Dispatcher) -> None:
     )
 
 
-def setup_middlewares(dp: Dispatcher) -> None:  # TODO: remove this if unused in future
-    pass
-
-
 async def setup_aiogram(dp: Dispatcher) -> None:
     setup_handlers(dp)
-    setup_middlewares(dp)
 
 
 async def on_startup_polling(dispatcher: Dispatcher) -> None:

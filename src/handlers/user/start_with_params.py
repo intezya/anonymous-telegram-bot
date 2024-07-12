@@ -1,7 +1,6 @@
 from aiogram.filters import CommandObject
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
-from sqlalchemy.exc import NoResultFound
 
 from keyboards.inline import cancel as cancel_kb
 from other.constants import SUCCESSFUL_LINK_TEXT
@@ -11,13 +10,17 @@ from services.users import UsersService
 from states import UserStates
 
 
-async def start_with_params(msg: Message, command: CommandObject, state: FSMContext, uow: IUnitOfWork):
+async def start_with_params(
+    msg: Message,
+    command: CommandObject,
+    state: FSMContext,
+    uow: IUnitOfWork,
+) -> None:
     receiver_hashed_id = command.args
-    kb = None
 
-    try:
-        receiver_user = await UsersService().get_user(uow, receiver_hashed_id)
-    except NoResultFound:
+    receiver_user = await UsersService().get_user(uow, hashed_tg_id=receiver_hashed_id)
+
+    if receiver_user is None:
         await msg.answer('Такого пользователя не существует! ❌')
         return
 
@@ -27,12 +30,11 @@ async def start_with_params(msg: Message, command: CommandObject, state: FSMCont
         text = 'Нельзя отправить сообщение самому себе! ❌'
     else:
         text = SUCCESSFUL_LINK_TEXT
-        kb = cancel_kb()
         await state.set_state(UserStates.get_text_to_send)
 
     sent_message = await msg.answer(
         text=text,
-        reply_markup=kb,
+        reply_markup=cancel_kb(),
     )
 
     await state.update_data(

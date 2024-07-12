@@ -6,13 +6,17 @@ from keyboards.inline import answer_back as answer_back_kb
 from other.constants import MSG_SENT_TEXT
 
 
-async def get_text_to_send(msg: Message, state: FSMContext, bot: Bot):
+async def get_text_to_send(
+    msg: Message,
+    state: FSMContext,
+    bot: Bot,
+) -> None:
     state_data = await state.get_data()
     receiver_id = state_data.get('receiver_id')
     hashed_sender_id = state_data.get('hashed_sender_id')
 
     if msg.text:
-        text_for_msg = 'Получено новое сообщение!\n\n' + msg.text
+        text_for_msg = 'Получено новое сообщение!\n\n{text}'.format(text=msg.text)
         await bot.send_message(
             chat_id=receiver_id,
             text=text_for_msg,

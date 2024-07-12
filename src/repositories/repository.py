@@ -27,6 +27,7 @@ class SQLAlchemyRepository(AbstractRepository):
         await self.session.execute(statement)
 
     async def find_one(self, **filter_by) -> UserSchema:
+        # TODO: move try/except with NoResultFound here
         if 'user_id' in filter_by.keys():
             filter_by['tg_id'] = int(filter_by.pop('user_id'))
         statement = select(self.model).filter_by(**filter_by)

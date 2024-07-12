@@ -13,3 +13,6 @@ per-file-ignores =
 
     # There is just magic filter "F"
     src/handlers/user/__init__.py: WPS347
+
+    #
+    src/handlers/user/text_to_send_state.py: WPS217

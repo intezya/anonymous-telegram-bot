@@ -7,7 +7,11 @@ from other.constants import CANCEL_INLINE_TEXT
 from other.get_hash import get_hash
 
 
-async def cancel(callback: CallbackQuery, state: FSMContext, bot: Bot):
+async def cancel(
+    callback: CallbackQuery,
+    state: FSMContext,
+    bot: Bot,
+) -> None:
     hashed_tg_id = get_hash(callback.from_user.id)
 
     bot_info = await bot.me()
