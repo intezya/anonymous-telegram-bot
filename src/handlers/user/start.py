@@ -30,3 +30,4 @@ async def start(
         text=START_TEXT.format(link=link),
         reply_markup=share_tg_link(link),
     )
+    await msg.delete()

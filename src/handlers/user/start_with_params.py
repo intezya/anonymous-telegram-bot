@@ -43,6 +43,8 @@ async def start_with_params(
         reply_markup=cancel_kb(),
     )
 
+    await msg.delete()
+
     await state.update_data(
         receiver_id=receiver_id,
         hashed_sender_id=get_hash(msg.from_user.id),
