@@ -1,5 +1,3 @@
-from sqlalchemy.exc import NoResultFound
-
 from other.get_hash import get_hash
 from repositories.unitofwork import IUnitOfWork
 from schemas.user import UserSchema
@@ -15,8 +13,6 @@ class UsersService:
     async def get_user(self, uow: IUnitOfWork, **kwargs) -> UserSchema | None:
         if len(kwargs) > 1:
             raise ValueError('Too many kwargs')
-        try:
-            async with uow:
-                return await uow.users.find_one(**kwargs)
-        except NoResultFound:
-            return None
+
+        async with uow:
+            return await uow.users.find_one(**kwargs)

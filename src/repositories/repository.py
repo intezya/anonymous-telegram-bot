@@ -1,6 +1,9 @@
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 
-from sqlalchemy import insert, select
+from sqlalchemy import insert
+from sqlalchemy import select
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from schemas.user import UserSchema
@@ -26,10 +29,12 @@ class SQLAlchemyRepository(AbstractRepository):
         statement = insert(self.model).values(tg_id=tg_id, hashed_tg_id=hashed_tg_id)
         await self.session.execute(statement)
 
-    async def find_one(self, **filter_by) -> UserSchema:
-        # TODO: move try/except with NoResultFound here
+    async def find_one(self, **filter_by) -> UserSchema | None:
         if 'user_id' in filter_by.keys():
             filter_by['tg_id'] = int(filter_by.pop('user_id'))
         statement = select(self.model).filter_by(**filter_by)
         query_result = await self.session.execute(statement)
-        return query_result.scalar_one().to_read_model()
+        try:
+            return query_result.scalar_one().to_read_model()
+        except NoResultFound:
+            return None
