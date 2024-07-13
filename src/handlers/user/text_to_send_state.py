@@ -4,7 +4,7 @@ from aiogram.types import Message
 
 from keyboards.inline import answer_back as answer_back_kb
 from keyboards.inline import send_more
-from other.constants import MSG_SENT_TEXT
+from other.constants import MSG_SENT_TEXT, RECEIVED_NEW_MESSAGE
 from other.get_hash import get_hash
 
 
@@ -16,9 +16,14 @@ async def get_text_to_send(  # noqa: WPS217
     state_data = await state.get_data()
     receiver_id = state_data.get('receiver_id')
     hashed_sender_id = state_data.get('hashed_sender_id')
+    msg_chat_id_to_delete = state_data.get('msg_chat_id_to_delete')
+    msg_id_to_delete = state_data.get('msg_id_to_delete')
 
     if msg.text:
-        text_for_msg = 'Получено новое сообщение!\n\n{text}'.format(text=msg.text)
+        text_for_msg = '{INJECTED_MESSAGE}\n\n{text}'.format(
+            INJECTED_MESSAGE=RECEIVED_NEW_MESSAGE,
+            text=msg.text
+        )
         await bot.send_message(
             chat_id=receiver_id,
             text=text_for_msg,
@@ -38,8 +43,8 @@ async def get_text_to_send(  # noqa: WPS217
     )
 
     await bot.delete_message(
-        chat_id=state_data.get('msg_chat_id_to_delete'),
-        message_id=state_data.get('msg_id_to_delete'),
+        chat_id=msg_chat_id_to_delete,
+        message_id=msg_id_to_delete,
     )
 
     await state.clear()

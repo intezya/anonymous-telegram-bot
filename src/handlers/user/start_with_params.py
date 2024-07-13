@@ -3,7 +3,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from keyboards.inline import cancel as cancel_kb
-from other.constants import SUCCESSFUL_LINK_TEXT
+from other.constants import SUCCESSFUL_LINK_TEXT, USER_NOT_FOUND_TEXT, CANNOT_SEND_MESSAGE_YOURSELF
 from other.get_hash import get_hash
 from repositories.unitofwork import IUnitOfWork
 from services.users import UsersService
@@ -17,7 +17,6 @@ async def start_with_params(  # noqa: WPS217
     uow: IUnitOfWork,
 ) -> None:
     user_from_db = await UsersService().get_user(uow, user_id=msg.from_user.id)
-
     if user_from_db is None:
         await UsersService().add_user(uow, msg.from_user.id)
 
@@ -26,11 +25,11 @@ async def start_with_params(  # noqa: WPS217
     await msg.delete()
 
     if receiver_user is None:
-        await msg.answer('Такого пользователя не существует! ❌')
+        await msg.answer(USER_NOT_FOUND_TEXT)
         return
 
     if receiver_user.id == msg.from_user.id:
-        await msg.answer('Нельзя отправить сообщение самому себе! ❌')
+        await msg.answer(CANNOT_SEND_MESSAGE_YOURSELF)
         return
     else:
         text = SUCCESSFUL_LINK_TEXT

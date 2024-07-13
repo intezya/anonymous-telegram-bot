@@ -2,7 +2,7 @@ from aiogram import Bot
 from aiogram.types import Message
 
 from keyboards.inline import share_tg_link
-from other.constants import START_TEXT
+from other.constants import START_TEXT, BASE_SHARE_LINK
 from other.get_hash import get_hash
 from repositories.unitofwork import IUnitOfWork
 from services.users import UsersService
@@ -21,7 +21,7 @@ async def start(
     hashed_id = get_hash(msg.from_user.id)
 
     bot_info = await bot.me()
-    link = 'https://t.me/{bot_username}?start={hashed_id}'.format(
+    link = BASE_SHARE_LINK.format(
         bot_username=bot_info.username,
         hashed_id=hashed_id,
     )

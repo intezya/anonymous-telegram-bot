@@ -7,8 +7,11 @@ CANCEL_INLINE_TEXT = '''⚙️ Вы отменили отправку сообщ
 {link}\n
 Опубликуй её и получай анонимные сообщения'''  # noqa: Q001
 MSG_SENT_TEXT = 'Сообщение отправлено!'
-USER_NOT_FOUND_TEXT = '❌ Пользователь не найден! ❌'
+USER_NOT_FOUND_TEXT = 'Пользователь не найден! ❌'
 SUCCESSFUL_LINK_TEXT = '''
 Сейчас ты можешь отправить анонимное сообщение тому человеку, который опубликовал эту ссылку.
 '''  # noqa: Q001
 SEND_MORE_TEXT = 'Отправь сообщение, чтобы написать этому пользователю ещё раз.'
+BASE_SHARE_LINK = 'https://t.me/{bot_username}?start={hashed_id}'
+CANNOT_SEND_MESSAGE_YOURSELF = 'Нельзя отправить сообщение самому себе! ❌'
+RECEIVED_NEW_MESSAGE = 'Получено новое сообщение!'
