@@ -23,6 +23,8 @@ async def start_with_params(
 
     receiver_user = await UsersService().get_user(uow, hashed_id=command.args)
 
+    await msg.delete()
+
     if receiver_user is None:
         await msg.answer('Такого пользователя не существует! ❌')
         return
@@ -38,8 +40,6 @@ async def start_with_params(
         text=text,
         reply_markup=cancel_kb(),
     )
-
-    await msg.delete()
 
     await state.update_data(
         receiver_id=receiver_user.id,

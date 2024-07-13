@@ -48,6 +48,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-    # TODO: add sender_id, receiver_id and other data that stored in
-    #  state.data to Message attributes
