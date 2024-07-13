@@ -21,17 +21,13 @@ async def start_with_params(
     if user_from_db is None:
         await UsersService().add_user(uow, msg.from_user.id)
 
-    receiver_hashed_id = command.args
-
-    receiver_user = await UsersService().get_user(uow, hashed_id=receiver_hashed_id)
+    receiver_user = await UsersService().get_user(uow, hashed_id=command.args)
 
     if receiver_user is None:
         await msg.answer('Такого пользователя не существует! ❌')
         return
 
-    receiver_id = receiver_user.id
-
-    if receiver_id == msg.from_user.id:
+    if receiver_user.id == msg.from_user.id:
         await msg.answer('Нельзя отправить сообщение самому себе! ❌')
         return
     else:
@@ -46,7 +42,7 @@ async def start_with_params(
     await msg.delete()
 
     await state.update_data(
-        receiver_id=receiver_id,
+        receiver_id=receiver_user.id,
         hashed_sender_id=get_hash(msg.from_user.id),
         msg_id_to_delete=sent_message.message_id,
         msg_chat_id_to_delete=sent_message.chat.id,

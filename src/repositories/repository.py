@@ -26,8 +26,8 @@ class SQLAlchemyRepository(AbstractRepository):
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    async def add_one(self, id: int, hashed_id: str) -> None:
-        statement = insert(self.model).values(id=id, hashed_id=get_hash(id))
+    async def add_one(self, tg_id: int, hashed_id: str) -> None:
+        statement = insert(self.model).values(id=tg_id, hashed_id=get_hash(tg_id))
         await self.session.execute(statement)
 
     async def find_one(self, **filter_by) -> UserSchema | None:
