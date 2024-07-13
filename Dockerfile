@@ -1,27 +1,27 @@
-FROM python:3.12-slim as builder
+FROM python:3.12.4
 
-RUN pip install poetry==1.8.3
+# Configure Poetry
+ENV POETRY_VERSION=1.8.3
+ENV POETRY_HOME=/opt/poetry
+ENV POETRY_VENV=/opt/poetry-venv
+ENV POETRY_CACHE_DIR=/opt/.cache
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-ENV POETRY_NO_INTERACTION=1 \
-    POETRY_VIRTUALENVS_IN_PROJECT=1 \
-    POETRY_VIRTUALENVS_CREATE=1 \
-    POETRY_CACHE_DIR=/tmp/poetry_cache
+
+# Install poetry separated from system interpreter
+RUN python3 -m venv $POETRY_VENV \
+	&& $POETRY_VENV/bin/pip install -U pip setuptools \
+	&& $POETRY_VENV/bin/pip install poetry==${POETRY_VERSION}
+
+# Add `poetry` to PATH
+ENV PATH="${PATH}:${POETRY_VENV}/bin"
 
 WORKDIR /app
 
-COPY pyproject.toml poetry.lock ./
-RUN touch README.md
+# Install dependencies
+COPY poetry.lock pyproject.toml ./
+RUN poetry install
 
-RUN poetry install --no-root && rm -rf $POETRY_CACHE_DIR
-
-# The runtime image, used to just run the code provided its virtual environment
-FROM python:3.12-slim as runtime
-
-ENV VIRTUAL_ENV=/app/.venv \
-    PATH="/app/.venv/bin:$PATH"
-
-COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
-
-COPY src ./src
-
-ENTRYPOINT ["python", "-m", "src.presentation.src"]
+# Copy code to /app/src
+COPY /src /src
