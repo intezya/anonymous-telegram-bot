@@ -5,7 +5,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from pydantic import PostgresDsn
 
-path_to_env_file = Path(__file__).parent.parent / '.env'
+path_to_env_file = Path(__file__).parent / '.env'
 
 load_dotenv(dotenv_path=path_to_env_file)
 
