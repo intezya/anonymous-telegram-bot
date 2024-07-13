@@ -8,7 +8,7 @@ from other.constants import MSG_SENT_TEXT
 from other.get_hash import get_hash
 
 
-async def get_text_to_send(
+async def get_text_to_send(  # noqa: WPS217
     msg: Message,
     state: FSMContext,
     bot: Bot,

@@ -1,5 +1,4 @@
-from aiogram import F
-from aiogram import Router
+from aiogram import F, Router
 from aiogram.filters import CommandStart
 
 from filters import ChatTypeFilter

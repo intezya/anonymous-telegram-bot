@@ -1,7 +1,5 @@
-from sqlalchemy import BigInteger
-from sqlalchemy import String
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from sqlalchemy import BigInteger, String
+from sqlalchemy.orm import Mapped, mapped_column
 
 from db.base import Base
 from schemas.user import UserSchema

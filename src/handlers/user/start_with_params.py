@@ -10,7 +10,7 @@ from services.users import UsersService
 from states import UserStates
 
 
-async def start_with_params(
+async def start_with_params(  # noqa: WPS217
     msg: Message,
     command: CommandObject,
     state: FSMContext,

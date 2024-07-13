@@ -1,8 +1,6 @@
-from abc import ABC
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 
-from sqlalchemy import insert
-from sqlalchemy import select
+from sqlalchemy import insert, select
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 
