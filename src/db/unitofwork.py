@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 from db.base import session_factory
-from repositories.user import UsersRepository
+from db.user import UsersRepository
 
 
 class IUnitOfWork(ABC):

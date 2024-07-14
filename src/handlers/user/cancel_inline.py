@@ -3,8 +3,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
 
 from keyboards.inline import share_tg_link
-from other.constants import CANCEL_INLINE_TEXT, BASE_SHARE_LINK
-from other.get_hash import get_hash
+from utils.constants import CANCEL_INLINE_TEXT, BASE_SHARE_LINK
+from utils.get_hash import get_hash
 
 
 async def cancel(

@@ -2,9 +2,9 @@ from aiogram import Bot
 from aiogram.types import Message
 
 from keyboards.inline import share_tg_link
-from other.constants import START_TEXT, BASE_SHARE_LINK
-from other.get_hash import get_hash
-from repositories.unitofwork import IUnitOfWork
+from utils.constants import START_TEXT, BASE_SHARE_LINK
+from utils.get_hash import get_hash
+from db.unitofwork import IUnitOfWork
 from services.users import UsersService
 
 

@@ -2,9 +2,9 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
 
 from keyboards.inline import cancel as cancel_kb
-from other.constants import ANSWER_BACK_TEXT
-from other.get_hash import get_hash
-from repositories.unitofwork import UnitOfWork
+from utils.constants import ANSWER_BACK_TEXT
+from utils.get_hash import get_hash
+from db.unitofwork import UnitOfWork
 from services.users import UsersService
 from states import UserStates
 

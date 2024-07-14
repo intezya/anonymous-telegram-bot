@@ -4,7 +4,7 @@ from sqlalchemy import insert, select
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from other.get_hash import get_hash
+from utils.get_hash import get_hash
 from schemas.user import UserSchema
 
 

@@ -3,9 +3,9 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from keyboards.inline import cancel as cancel_kb
-from other.constants import SUCCESSFUL_LINK_TEXT, USER_NOT_FOUND_TEXT, CANNOT_SEND_MESSAGE_YOURSELF
-from other.get_hash import get_hash
-from repositories.unitofwork import IUnitOfWork
+from utils.constants import SUCCESSFUL_LINK_TEXT, USER_NOT_FOUND_TEXT, CANNOT_SEND_MESSAGE_YOURSELF
+from utils.get_hash import get_hash
+from db.unitofwork import IUnitOfWork
 from services.users import UsersService
 from states import UserStates
 

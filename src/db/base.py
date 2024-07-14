@@ -6,7 +6,7 @@ from sqlalchemy.orm import DeclarativeBase, declared_attr
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 
 from config import settings
-from other.case_converter import camel_case_to_snake_case
+from utils.case_converter import camel_case_to_snake_case
 
 
 class Base(DeclarativeBase):

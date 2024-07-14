@@ -4,8 +4,8 @@ from aiogram.types import Message
 
 from keyboards.inline import answer_back as answer_back_kb
 from keyboards.inline import send_more
-from other.constants import MSG_SENT_TEXT, RECEIVED_NEW_MESSAGE
-from other.get_hash import get_hash
+from utils.constants import MSG_SENT_TEXT, RECEIVED_NEW_MESSAGE
+from utils.get_hash import get_hash
 
 
 async def get_text_to_send(  # noqa: WPS217
