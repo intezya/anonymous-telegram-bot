@@ -5,7 +5,7 @@ from schemas.user import UserSchema
 
 class UsersService:
     @staticmethod
-    async def add_user(self, uow: IUnitOfWork, tg_id: int) -> None:
+    async def add_user(uow: IUnitOfWork, tg_id: int) -> None:
         async with uow:
             user = await UsersService().get_user(uow, user_id=tg_id)
             if user is not None:
@@ -16,7 +16,7 @@ class UsersService:
             await uow.commit()
 
     @staticmethod
-    async def get_user(self, uow: IUnitOfWork, **kwargs) -> UserSchema | None:
+    async def get_user(uow: IUnitOfWork, **kwargs) -> UserSchema | None:
         if len(kwargs) > 1:
             raise ValueError('Too many kwargs')
 
